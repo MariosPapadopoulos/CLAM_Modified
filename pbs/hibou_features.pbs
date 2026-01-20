@@ -1,0 +1,25 @@
+#!/bin/bash
+#PBS -lselect=1:ncpus=4:mem=96gb:ngpus=1
+#PBS -lwalltime=24:00:00
+
+cd $PBS_O_WORKDIR
+cd ..
+
+source $HOME/anaconda3/bin/activate
+source activate clam_latest
+export UNI_CKPT_PATH=checkpoints/uni/pytorch_model.bin
+
+wsi_folder="./CAMELYON16/training/normal"
+wsi_patches="./CAMELYON16_patches_resection"
+h5_dir="./cam16_patches"
+
+mkdir -p ${wsi_patches}
+
+DATA_DIRECTORY="./CAMELYON16/training/normal"
+DIR_TO_COORDS=
+
+python -c "import torch;print(torch.cuda.is_available()); print(torch.__version__)"
+python -c "import openslide"
+
+
+python extract_features_fp.py --data_h5_dir DIR_TO_COORDS --data_slide_dir DATA_DIRECTORY --csv_path CSV_FILE_NAME --feat_dir FEATURES_DIRECTORY --model_name "Hibou-B" --batch_size 64 --slide_ext .svs
