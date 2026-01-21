@@ -86,33 +86,33 @@ def save_hdf5(output_path, asset_dict, attr_dict= None, mode='a'):
             dset[-data_shape[0]:] = val
 
 
-            # ### --- NEW: save each extracted patch as PNG into a per-slide folder ---
-            save_png=True
-            png_root=None  # if None, PNGs are saved next to the .h5 file
+            # # ### --- NEW: save each extracted patch as PNG into a per-slide folder ---
+            # save_png=True
+            # png_root=None  # if None, PNGs are saved next to the .h5 file
 
-            if save_png and key == 'imgs':
-                # default: put PNGs next to the .h5 in a subfolder "<slide>_png"
-                slide_name = os.path.splitext(os.path.basename(output_path))[0]
-                if png_root is None:
-                    png_dir = os.path.join(os.path.dirname(output_path), f"{slide_name}_png")
-                else:
-                    png_dir = os.path.join(png_root, slide_name)
-                os.makedirs(png_dir, exist_ok=True)
+            # if save_png and key == 'imgs':
+            #     # default: put PNGs next to the .h5 in a subfolder "<slide>_png"
+            #     slide_name = os.path.splitext(os.path.basename(output_path))[0]
+            #     if png_root is None:
+            #         png_dir = os.path.join(os.path.dirname(output_path), f"{slide_name}_png")
+            #     else:
+            #         png_dir = os.path.join(png_root, slide_name)
+            #     os.makedirs(png_dir, exist_ok=True)
 
-                # val is shape (B, H, W, C) or (B, H, W, 3)
-                batch = val
-                if isinstance(batch, np.ndarray) is False:
-                    batch = np.asarray(batch)
+            #     # val is shape (B, H, W, C) or (B, H, W, 3)
+            #     batch = val
+            #     if isinstance(batch, np.ndarray) is False:
+            #         batch = np.asarray(batch)
 
-                for j in range(batch.shape[0]):
-                    patch_idx = old_len + j  # this is the H5 row index
-                    img = batch[j]
+            #     for j in range(batch.shape[0]):
+            #         patch_idx = old_len + j  # this is the H5 row index
+            #         img = batch[j]
 
-                    # ensure uint8 for PIL
-                    if img.dtype != np.uint8:
-                        img = img.astype(np.uint8)
+            #         # ensure uint8 for PIL
+            #         if img.dtype != np.uint8:
+            #             img = img.astype(np.uint8)
 
-                    Image.fromarray(img).save(os.path.join(png_dir, f"{patch_idx:06d}.png"))
+            #         Image.fromarray(img).save(os.path.join(png_dir, f"{patch_idx:06d}.png"))
     file.close()
     return output_path
 
