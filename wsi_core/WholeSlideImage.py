@@ -382,6 +382,30 @@ class WholeSlideImage(object):
             
             asset_dict, attr_dict = self.process_contour(cont, self.holes_tissue[idx], patch_level, save_path, patch_size, step_size, **kwargs)
             if len(asset_dict) > 0:
+
+                # ### --- NEW: save each extracted patch as PNG into a per-slide folder ---
+                # try:
+                #     png_dir = os.path.join(save_path, f"{self.name}_patches")
+                #     os.makedirs(png_dir, exist_ok=True)
+                #     coords = asset_dict.get('coords', None)
+                #     if coords is not None and len(coords) > 0:
+                #         # coords is an array-like of (x, y) in level-0 coordinates
+                #         for coord in coords:
+                #             try:
+                #                 # ensure integer pixel coords
+                #                 x = int(coord[0])
+                #                 y = int(coord[1])
+                #                 # read_region expects level-0 coordinates for location
+                #                 # and (width,height) in pixels at the requested level
+                #                 patch_img = self.wsi.read_region((x, y), patch_level, (patch_size, patch_size)).convert('RGB')
+                #                 png_path = os.path.join(png_dir, f"{self.name}_x{x}_y{y}.png")
+                #                 patch_img.save(png_path)
+                #             except Exception as e:
+                #                 print(f"Error saving PNG for slide {self.name} at ({x},{y}): {e}")
+                # except Exception as e:
+                #     print(f"Error creating/using PNG directory for slide {self.name}: {e}")
+                # # --- END NEW PNG SAVE BLOCK ---
+                
                 if init:
                     save_hdf5(save_path_hdf5, asset_dict, attr_dict, mode='w')
                     init = False
