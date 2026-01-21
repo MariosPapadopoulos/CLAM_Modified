@@ -8,4 +8,4 @@ This repository is a **fork** of **CLAM** (Clustering-constrained Attention Mult
 -  Provided Python file to save pngs to desired folder location
 
 ## License
-© [Mahmood Lab](http://www.mahmoodlab.org) - This code is made available under the GPLv3 License and is available for non-commercial academic purposes.
+© [Mahmood Lab](http://www.mahmoodlab.org) - This code is a fork of the upstream repository made available under the GPLv3 License and is available for non-commercial academic purposes.
